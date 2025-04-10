@@ -1,6 +1,6 @@
 .sidebar {
+    padding: 0px 15px 0px 15px;
     background-color: var(--lightColour);
-    width: 16rem;
     height: 100%;
     border-right: 3px solid var(--lightBorder);
     display: flex;
@@ -9,7 +9,7 @@
 }
 
 .sidebar hr {
-    width: 80%;
+    width: 100%;
     border-color: var( --lightBorder);
 }
 
