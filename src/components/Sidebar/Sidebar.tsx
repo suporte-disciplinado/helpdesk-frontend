@@ -10,6 +10,7 @@ import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
+import PeopleIcon from '@mui/icons-material/People';
 
 const Sidebar: React.FC = () => {
     const location = useLocation();
@@ -54,6 +55,20 @@ const Sidebar: React.FC = () => {
                         >
                             <NotificationsIcon sx={{ fontSize: "1.8rem" }} />
                             <Txt>Notificações</Txt>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+            <hr />
+            <div className={styles.mainOptions}>
+                <ul>
+                    <li>
+                        <Link
+                            to="/users"
+                            className={location.pathname === "/users" ? styles.active : ""}
+                        >
+                             <PeopleIcon sx={{ fontSize: "1.8rem" }} />
+                             <Txt>Usuários</Txt>
                         </Link>
                     </li>
                 </ul>

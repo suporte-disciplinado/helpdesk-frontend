@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Tickets from "./pages/Tickets/Tickets";
+import Users from "./pages/Users/Users";
 
 export default function App(){
 
@@ -14,6 +15,7 @@ export default function App(){
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/tickets" element={<Tickets />} />
+        <Route path="/users" element={<Users />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
