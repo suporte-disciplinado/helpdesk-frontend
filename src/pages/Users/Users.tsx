@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Layout from "../../components/Layout/Layout";
 import AlertDialog from "../../baseComponents/AlertDialog";
@@ -32,6 +32,7 @@ const Users = () => {
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [userSelected, setUserSelected] = useState(null);
+    const [searchText, setSearchText] = useState('');
 
     const [openDialogDelete, setOpenDialogDelete] = useState(false);
     const [openDialogEdit, setOpenDialogEdit] = useState(false);
@@ -91,7 +92,12 @@ const Users = () => {
 
         setLoading(true);
         try {
-            const rows = await api.get('/api/user');
+            const axiosConfig = {
+                params: {
+                    search: searchText,
+                },
+            }
+            const rows = await api.get(`/api/user`, axiosConfig);
             setUsers(rows.data);
         } catch (error) {
             setOpenAlert(true);
@@ -192,7 +198,15 @@ const Users = () => {
                     <div className={styles.searchContainer}>
                         <Grid container spacing={2}>
                             <Grid size={4}>
-                                <TextField disabled fullWidth label="Localizar" variant="outlined" size="small" />
+                                <TextField fullWidth label="Localizar" variant="outlined" size="small" 
+                                    value={searchText}
+                                    onChange={(e) => setSearchText(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            listUsers();
+                                        }
+                                    }}
+                                />
                             </Grid>
 
                             <Grid size={2}>
