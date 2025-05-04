@@ -1,4 +1,4 @@
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Layout from "../../components/Layout/Layout";
 import styles from './Profile.module.css';
@@ -8,7 +8,6 @@ import {
     Button,
     TextField,
     Grid,
-    Tooltip,
     Snackbar,
     Alert,
     AlertColor,

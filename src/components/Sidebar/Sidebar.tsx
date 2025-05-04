@@ -15,6 +15,12 @@ import PeopleIcon from '@mui/icons-material/People';
 const Sidebar: React.FC = () => {
     const location = useLocation();
 
+    const logout = () => {
+        localStorage.removeItem("serviceToken");
+        localStorage.removeItem("name");
+        window.location.pathname = "/login";
+    }
+
     return (
         <aside className={styles.sidebar}>
             <div className={styles.personalInfo}>
@@ -24,7 +30,7 @@ const Sidebar: React.FC = () => {
                 />
                 <div className={styles.greetings}>
                     <Txt>Bem vindo (a)</Txt>
-                    <strong>Victor H. Watanabe</strong>
+                    <strong>{localStorage.getItem("name")}</strong>
                 </div>
             </div>
             <hr />
@@ -87,8 +93,9 @@ const Sidebar: React.FC = () => {
                     </li>
                     <li>
                         <Link
-                            to="/login"
-                            className={location.pathname === "/notifications" ? styles.active : ""}
+                            to="#"
+                            onClick={logout} 
+                            className={location.pathname === "#" ? styles.active : ""}
                         >
                             <LogoutIcon sx={{ fontSize: "1.8rem" }} />
                             <Txt>Sair</Txt>

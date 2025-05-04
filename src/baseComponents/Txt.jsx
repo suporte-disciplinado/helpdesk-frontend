@@ -34,7 +34,7 @@ export default function Txt(props){
 
 const getStyle = (props) => {
     let colour = props.contrast? Colours.txtContrast : Colours.txt
-    console.log("contrast : ", props.contrast)
+    //console.log("contrast : ", props.contrast)
     let size = props.size;
     return {
         display: 'inline',
