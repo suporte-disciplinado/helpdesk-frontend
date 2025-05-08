@@ -136,7 +136,7 @@ const Login = () => {
                 </Grid>
             </HomePageLayout>
 
-             <Snackbar
+            <Snackbar
                 open={openAlert}
                 autoHideDuration={6000}
                 onClose={handleCloseAlert}
