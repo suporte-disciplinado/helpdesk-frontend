@@ -42,8 +42,7 @@ const Profile = () => {
 
         setLoading(true);
         try {
-            const idUser = 1;
-            const rows = await api.get(`/api/user/${idUser}`);
+            const rows = await api.get(`/api/user/profile`);
             setFormData(rows.data);
         } catch (error) {
             setOpenAlert(true);
@@ -95,7 +94,7 @@ const Profile = () => {
                     <Typography variant="h6" className={styles.title}>
                         Perfil
                     </Typography>
-                    <Button variant="contained" color="info" startIcon={<SaveIcon />}
+                    <Button variant="outlined" color="info" startIcon={<SaveIcon />}
                         onClick={() => formRef.current?.requestSubmit()}>
                         Salvar
                     </Button>
@@ -104,7 +103,7 @@ const Profile = () => {
                 <div className={styles.card}>
                     <form ref={formRef}  onSubmit={handleSubmit} autoComplete="off">
                         <Grid container spacing={2}>
-                            <Grid size={6}>
+                            <Grid size={{ xs: 12, md: 6 }}>
                                 <TextField
                                     autoFocus
                                     required
@@ -118,7 +117,7 @@ const Profile = () => {
                                     onChange={handleChange}
                                 />
                             </Grid>
-                            <Grid size={6}>
+                            <Grid size={{ xs: 12, md: 6 }}>
                                 <TextField
                                     required
                                     id="email"

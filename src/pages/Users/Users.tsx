@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import Layout from "../../components/Layout/Layout";
 import AlertDialog from "../../baseComponents/AlertDialog";
-import UserEdit from "./UserEdit";
+import UserEdit from "./Edit/UserEdit";
 
 import styles from './Users.module.css';
 
@@ -63,6 +63,7 @@ const Users = () => {
                     <Tooltip title="Editar" placement="bottom" arrow>
                         <GridActionsCellItem
                             key={1}
+                            id="btEditUser"
                             icon={<EditIcon />}
                             label="Editar"
                             onClick={editUser(row)}
@@ -72,6 +73,7 @@ const Users = () => {
                     <Tooltip title="Excluir" placement="bottom" arrow>
                         <GridActionsCellItem
                             key={2}
+                            id="btDeleteUser"
                             icon={<DeleteIcon />}
                             label="Excluir"
                             onClick={deleteUser(row)}
