@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import Layout from "../../components/Layout/Layout";
 import AlertDialog from "../../baseComponents/AlertDialog";
@@ -20,7 +20,8 @@ import {
     Snackbar,
     Alert,
     AlertColor,
-    Chip
+    Chip,
+    MenuItem
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -38,11 +39,11 @@ const Tickets = () => {
     const [loading, setLoading] = useState(false);
     const [tickets, setTickets] = useState([]);
     const [ticketSelected, setTicketSelected] = useState(null);
+
     const [searchText, setSearchText] = useState('');
+    const [statusFilter, setStatusFilter] = useState('OPEN');
 
     const [openDialogDelete, setOpenDialogDelete] = useState(false);
-    const [openDialogEdit, setOpenDialogEdit] = useState(false);
-    const [typeDialogEdit, setTypeDialogEdit] = useState('');
 
     const [openAlert, setOpenAlert] = useState(false);
     const [msgAlert, setMsgAlert] = useState('');
@@ -51,7 +52,22 @@ const Tickets = () => {
     const paginationModel = { page: 0, pageSize: 10 };
 
     const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 50,
+            align: 'center',
+            headerAlign: 'center',
+            renderCell: (params) => {
+                return (
+                    <Link 
+                        to={`/ticket/${params.row.id}`} 
+                    >
+                        {params.row.id}
+                    </Link>
+                );
+            },
+        },
         { field: 'title', headerName: 'Título', minWidth: 200, flex: 1 },
         {   
             field: 'category', 
@@ -62,11 +78,20 @@ const Tickets = () => {
             }
         },
         {   
+            field: 'assignedAgent', 
+            headerName: 'Responsável', 
+            width: 150, 
+            valueGetter: (user) => {
+                return (user?.name || '') as GridValueGetter
+            }
+        },
+        {   
             field: 'status', 
             headerName: 'Status', 
-            width: 100, 
+            width: 140, 
             renderCell: (params) => (
                 <Chip
+                    sx={{ fontSize: '11px', width: '100%', textAlign: 'center' }}
                     label={getStatusName(params.value)}
                     color={
                         params.value === 'OPEN'
@@ -80,6 +105,14 @@ const Tickets = () => {
                     size="small"
                 />
             )
+        },
+        {   
+            field: 'user', 
+            headerName: 'Aberto por', 
+            width: 150, 
+            valueGetter: (user) => {
+                return (user?.name || '') as GridValueGetter
+            }
         },
         {
             field: 'actions',
@@ -141,8 +174,6 @@ const Tickets = () => {
     }
 
     const editTicket = (row: any) => () => {
-        setOpenDialogEdit(true);
-        setTypeDialogEdit('edit');
         navigate(`/ticket/${row.id}`);
     }
 
@@ -208,6 +239,30 @@ const Tickets = () => {
                             </Grid>
 
                             <Grid size={2}>
+                                <TextField
+                                    select
+                                    fullWidth
+                                    label="Status"
+                                    size="small"
+                                    value={statusFilter}
+                                    onChange={(e) => {
+                                        setStatusFilter(e.target.value);
+                                        listTickets();
+                                    }}
+                                    SelectProps={{
+                                        displayEmpty: true,
+                                    }}
+                                >
+                                    <MenuItem value="">Todos</MenuItem>
+                                    {TicketStatus.map((status) => (
+                                        <MenuItem key={status.id} value={status.id}>
+                                            {status.name}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+
+                            <Grid size={2}>
                                 <Button fullWidth variant="contained" color="info" startIcon={<SearchIcon />}
                                     onClick={listTickets}
                                 >
@@ -237,9 +292,17 @@ const Tickets = () => {
                         }}
                         sx={{
                             border: 0,
+                            fontSize: '12px',
                             '& .MuiDataGrid-columnHeaderTitle': {
                                 fontWeight: 'bold',
                                 color: '#333',
+                                fontSize: '12px',
+                            },
+                            '& .MuiDataGrid-cell': {
+                                fontSize: '12px', 
+                            },
+                            '& .MuiTablePagination-displayedRows, & .MuiTablePagination-selectLabel': {
+                                fontSize: '13px', 
                             },
                         }}
                     />
