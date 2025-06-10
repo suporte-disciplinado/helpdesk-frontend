@@ -1,4 +1,4 @@
-const Colours =  { 
+const Colours = { 
     light : "var(--lightColour )",
     lBorder : "var(--lightBorder )",
     gray : "var(--grayColour )",
@@ -7,7 +7,6 @@ const Colours =  {
     txt : "var(--txtColourLight )",
     txtContrast : "var(--txtColourContrast )",
     txtDim : "var(--txtDim )",
-
     red : "var(--RED )",
     green : "var(--GREEN )",
     yellow : "var(--YELLOW )",
