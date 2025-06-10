@@ -241,9 +241,17 @@ const Users = () => {
                         }}
                         sx={{
                             border: 0,
+                            fontSize: '12px',
                             '& .MuiDataGrid-columnHeaderTitle': {
                                 fontWeight: 'bold',
                                 color: '#333',
+                                fontSize: '12px',
+                            },
+                            '& .MuiDataGrid-cell': {
+                                fontSize: '12px', 
+                            },
+                            '& .MuiTablePagination-displayedRows, & .MuiTablePagination-selectLabel': {
+                                fontSize: '13px', 
                             },
                         }}
                     />
