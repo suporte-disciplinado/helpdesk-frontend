@@ -45,7 +45,13 @@ const Users = () => {
     const paginationModel = { page: 0, pageSize: 10 };
 
     const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { 
+            field: 'id', 
+            headerName: 'ID', 
+            width: 50, 
+            align: 'center',
+            headerAlign: 'center', 
+        },
         { field: 'name', headerName: 'Nome', width: 150 },
         { field: 'email', headerName: 'E-mail', minWidth: 150, flex: 1 },
         {

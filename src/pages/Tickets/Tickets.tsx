@@ -72,7 +72,7 @@ const Tickets = () => {
         {   
             field: 'category', 
             headerName: 'Categoria', 
-            width: 200, 
+            width: 160, 
             valueGetter: (category) => {
                 return (category?.name || '') as GridValueGetter
             }
@@ -105,6 +105,19 @@ const Tickets = () => {
                     size="small"
                 />
             )
+        },
+        { 
+            field: 'createdAt', 
+            headerName: 'Aberto em', 
+            width: 100,
+            valueFormatter: (createdAt) => {
+              if (!createdAt) return '';
+              return new Date(createdAt).toLocaleString('pt-BR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric'
+              });
+            }
         },
         {   
             field: 'user', 
@@ -151,14 +164,21 @@ const Tickets = () => {
 
      useEffect(() => {
         listTickets();
-    }, []);
+    }, [statusFilter, searchText]);
 
     const listTickets = async () => {
         if (loading) return;
 
         setLoading(true);
         try {
-            const rows = await api.get(`/api/ticket?search=${searchText}`);
+            const axiosConfig = {
+                params: {
+                    title: searchText,
+                    status: statusFilter
+                }
+            }
+
+            const rows = await api.get(`/api/ticket`, axiosConfig);
             setTickets(rows.data);
         } catch (error) {
             setOpenAlert(true);
@@ -227,14 +247,18 @@ const Tickets = () => {
                     <div className={styles.searchContainer}>
                         <Grid container spacing={2}>
                             <Grid size={4}>
-                                <TextField fullWidth label="Localizar" variant="outlined" size="small" 
-                                    value={searchText}
-                                    onChange={(e) => setSearchText(e.target.value)}
-                                    onKeyDown={(e) => {
+                                <TextField 
+                                    fullWidth 
+                                    label="Localizar" 
+                                    variant="outlined" 
+                                    size="small" 
+                                    defaultValue={searchText}
+                                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                                         if (e.key === 'Enter') {
-                                            listTickets();
+                                            setSearchText((e.target as HTMLInputElement).value);
                                         }
                                     }}
+                                    onBlur={(e: React.FocusEvent<HTMLInputElement>) => setSearchText(e.target.value)}
                                 />
                             </Grid>
 
@@ -247,7 +271,9 @@ const Tickets = () => {
                                     value={statusFilter}
                                     onChange={(e) => {
                                         setStatusFilter(e.target.value);
-                                        listTickets();
+                                    }}
+                                    InputLabelProps={{
+                                        shrink: true,
                                     }}
                                     SelectProps={{
                                         displayEmpty: true,

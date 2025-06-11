@@ -123,10 +123,6 @@ const TicketEdit = () => {
     const formik = useFormik({
         initialValues: {
             id: null,
-            user: {
-                id: 1,
-                name: ''
-            },
             assignedAgent: {
                 id: null,
             },
@@ -147,11 +143,13 @@ const TicketEdit = () => {
             try {
                 setLoading(true);
                 
+                const { createdAt, updatedAt, ...ticketData } = values;
+                
                 if (values.id) {
-                    await api.put('/api/ticket', values);
+                    await api.put('/api/ticket', ticketData);
                     setMsgAlert('Ticket atualizado com sucesso!');
                 } else {
-                    await api.post('/api/ticket', values);
+                    await api.post('/api/ticket', ticketData);
                     setMsgAlert('Ticket cadastrado com sucesso!');
                 }
 
@@ -203,11 +201,12 @@ const TicketEdit = () => {
         if (!id || loading) return;
 
         try {
-            //const response = await api.get(`/api/comment/ticket/${id}`);
-            const response = await api.get(`/api/comment`);
+            const response = await api.get(`/api/comment?idTicket=${id}`);
             setComments(response.data);
         } catch (error) {
-            console.error('Erro ao carregar comentários:', error);
+            setMsgAlert('Erro ao carregar comentários!');
+            setOpenAlert(true);
+            setColorAlert('error');
         }
     };
 
@@ -218,7 +217,6 @@ const TicketEdit = () => {
         try {
             await api.post('/api/comment', {
                 ticket: { id },
-                user: { id: 1 }, // usuário logado
                 comment: newComment.trim()
             });
             
