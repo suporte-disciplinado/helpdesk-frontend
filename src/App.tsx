@@ -11,7 +11,6 @@ import Tables from "./pages/Tables/Tables";
 
 export default function App(){
 
-  console.log("routes")
   return (
     <Router>
       <Routes>

@@ -11,7 +11,6 @@ const Colours = {
     green : "var(--GREEN )",
     yellow : "var(--YELLOW )",
     pink : "var(--PINK )",
-    gray : "var(--GRAY )",
 } ;
 
 export default Colours;

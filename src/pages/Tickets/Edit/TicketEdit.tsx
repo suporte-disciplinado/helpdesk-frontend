@@ -499,6 +499,8 @@ const TicketEdit = () => {
                         <Box className={styles.tab_ticket}>
                             <Box className={styles.commentInput}>
                                 <TextField
+                                    id="newComment"
+                                    name="newComment"
                                     disabled={!id}
                                     fullWidth
                                     multiline
@@ -508,6 +510,7 @@ const TicketEdit = () => {
                                     className={styles.commentTextField}
                                 />
                                 <Button
+                                    id="sendComment"
                                     variant="contained"
                                     color="primary"
                                     onClick={handleAddComment}

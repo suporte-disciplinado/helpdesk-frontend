@@ -48,6 +48,8 @@ const Login = () => {
 
         setLoading(true);
         try {
+            localStorage.removeItem('serviceToken');
+
             const dataResponse = await api.post(`/api/auth/login`, formData);
             const {name} = dataResponse.data.user;
 

@@ -37,11 +37,12 @@ const Register = () => {
 
         setLoading(true);
         try {
-            const response = await apiService.post("/api/auth/register", form);
-            console.log(response);
+            localStorage.removeItem('serviceToken');
+
+            await apiService.post("/api/auth/register", form);
             handleAlert("Sucesso: Usuário cadastrado com sucesso!", true, "success");
         } catch (error: any) {
-            handleAlert(error.message, true, "error");
+            handleAlert(error, true, "error");
         } finally {
             setForm({
                 name: "",
